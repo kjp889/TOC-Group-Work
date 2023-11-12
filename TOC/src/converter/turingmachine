@@ -1,0 +1,154 @@
+package converter;
+
+import java.util.Arrays;
+
+public class turingmachine {
+
+	
+	   char[] Head1 = new char[9]; 
+	   char[] Head2 = new char[9]; 
+	   private String value;
+	   String todecimal;
+	   int conversion= 0;
+	   int z= 0;
+	   int[] bintable = {16,8,4,2,1,0};
+	   
+	public turingmachine() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public turingmachine(String value) {
+		this.value = value;
+	}
+	
+	public String getvalue() {
+		return value;
+	}
+	
+	public void setvalue(String value) {
+		this.value=value;
+	}
+	
+	public int getconversion() {
+		return conversion;
+	}
+	public String getbinary() {
+		return todecimal;
+	}
+
+
+	public void addition(String compute){
+		char[] charArray = compute.toCharArray();
+		int l = charArray.length;
+		//System.out.print(l);
+		for(int j = 0; j < l+1; j++ ) {
+			//System.out.print("i");
+			if (charArray[j] == '0' || charArray[j] =='1') {
+					Head1[j] = charArray[j];
+				//	System.out.println(Head1[j]);
+					
+				}
+				
+			else if(charArray[j] == '#') {
+				int u = j+1;
+				int b =0;
+				for (j = u ; j<l; j++) {
+				
+					if (charArray[j] == '0' || charArray[j] =='1') {
+							Head2[b] = charArray[j];
+							//System.out.println(Head2[b]);
+							
+						} b++;    }
+			
+				break;
+			}
+		}
+		for (int v = 8; v > 0; v--) {
+		//	System.out.print(Head1[v]);
+		}
+		for (int p = 8; p > 0; p--) {
+			//System.out.print(Head2[p]);
+		}
+		
+		int[] answer = new int[11];
+		int k=0;
+		int carry = 0;
+	for (k = 8; k > 0; k--) {
+	//	System.out.print(",");
+		if (Head1[k] == '0' && Head2[k] == '0' && carry == 1) {
+				answer[k] = 1;
+				System.out.print("entered 0 0 1" + "\n");
+			}else if (Head1[k] == '0' && Head2[k] == '0' && carry == 0) {
+				answer[k] = 0;
+				System.out.print("enetered 0 0 0" + "\n");
+			}
+		
+		if (Head1[k] == '1' && Head2[k] == '0' && carry == 1) {
+			answer[k] = 0;
+			answer[k-1]=1;
+			carry = 1;
+			System.out.print("enetered 1 0 1" + "\n");
+		}else if (Head1[k] == '1' && Head2[k] == '0' && carry == 0) {
+				answer[k] = 1;
+				System.out.print("enetered 1 0 0" + "\n");
+			}
+		
+		if (Head2[k] == '1' && Head1[k] == '0' && carry == 1) {
+			answer[k] = 0;
+			answer[k-1]=1;
+			carry = 1;
+			System.out.print("enetered head 2 1 0 1" + "\n");
+		}else if (Head2[k] == '1' && Head1[k] == '0' && carry == 0) {
+				answer[k] = 1;
+				System.out.print("enetered head2 1 0 0" + "\n");
+			}
+		
+		if (Head1[k] == '1' && Head2[k] == '1' && carry == 1 ) {
+			answer[k] = 1;
+			answer[k-1]=1;
+			carry = 1;
+			System.out.print("enetered 1 1 1" + "\n");
+		}else if (Head1[k] == '1' && Head2[k] == '1' ) {
+				answer[k] = 0;
+				answer[k-1]=1;
+				carry = 1;
+				System.out.print("enetered 1 1 0" + "\n");
+			}
+		
+				
+				System.out.print(answer[k]+ "\n");
+		
+	//	System.out.println(Head1);
+	//	System.out.println(Head2);
+		
+
+
+		
+	}
+	
+	int y=0;
+	while(y<5) {
+		System.out.print(answer[y]); 
+		y++;
+	}    	
+	todecimal = Arrays.toString(answer);
+	}
+
+	public void ConverttoDecimal(String todecimal) {
+		
+		char[] charArray3 = todecimal.toCharArray();
+		
+		
+		
+		System.out.print(charArray3);
+
+		
+			for(char c : charArray3) {
+				if(c == '1') {
+					System.out.println(c);
+		
+				}
+			}
+		
+	}
+}
