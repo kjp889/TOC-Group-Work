@@ -9,12 +9,13 @@ public class registerMachineConverter {
 	private int registerX;
 	private int registerY;
 	private int registerYCopy;
-	private int registerXCopy;
+	private int registerControle;
 	private int registerDivCopy;
 	private int registerRemainder;
 	private int registerMul;
 	private int registerDiv;
-	private int[] tape = new int[11];
+	private char[] tape ;//= new char[11];
+	private StringBuilder bin = new StringBuilder();
 	
 	
 	public registerMachineConverter() {
@@ -24,7 +25,7 @@ public class registerMachineConverter {
 		this.registerRemainder = 0;
 		this.registerDiv = 0; 
 		this.registerDivCopy = 0;
-		this.registerXCopy =0;
+		this.registerControle =1;
 		this.registerMul = 0;
 	}
 	
@@ -68,14 +69,14 @@ public class registerMachineConverter {
 		this.registerDiv = registerQ;
 	}
 
-	public int findRemainder(int registerX, int numTape) {
-		registerDiv = 0;
+	public void convert(int registerX) {
+		/*registerDiv = 0;
 		registerDivCopy = 0;
 		registerY = 2;
 		registerRemainder =0;
-		registerXCopy = 0;
+		registerControle = 0;
 		registerYCopy = 0;
-		registerMul = 0;
+		registerMul = 0;*/
 		//int remainder = 0;
 		//int count = 0;
 		//registerY--; //EMPTIES REGISTER 'Y' INTO REGISTER 'R'
@@ -85,7 +86,6 @@ public class registerMachineConverter {
 			registerYCopy++;
 			registerX--; //EMPTIES REGISTER 'X' INTO REGISTER 'C'
 			registerRemainder++; //
-			registerXCopy++;
 			/*WHEN REGISTER 'Y' GETS EMPTY INCREMENT REGISTER 'Div' AND REFILL REGISTER 'Y' BY
 			EMPTING REGISTER 'R'*/
 			if (registerY <= 0) {
@@ -107,6 +107,7 @@ public class registerMachineConverter {
 		
 		while (registerDiv > 0) {
 			registerDiv--;
+			registerControle++;
 			registerDivCopy++;
 			for(;registerY > 0; registerY--) {
 				registerYCopy++;
@@ -126,22 +127,44 @@ public class registerMachineConverter {
 		//System.out.print("Remainder");
 		//System.out.println(registerRemainder);
 		//remainder = registerR;
-		tape[numTape] = registerRemainder;
-		return registerDivCopy;
+		
+		//tape[num2] = (char) (registerRemainder % 10 + '0');
+		bin.append((char) (registerRemainder % 10 + '0'));
+		
+		//tape2.append(tape);
+		
+		for(;registerRemainder > 0; registerRemainder--) {}
+		
+		for(;registerDivCopy > 0; registerDivCopy--) {
+			registerX++;
+		}
+		//System.out.print(toString());
+		if(registerControle>1) {
+			registerControle--;
+			num2--;
+			convert(registerX);
+		}
+		//bin.reverse();
+		//return tape;
 	}
 
-	public void convert(int numX) {
-		while (numX >= 1) {
-			numX = findRemainder(numX, num2--);
-			/*if (num2 == 0) {
-				break;
-			}*/
+	public char[] toBin() {
+		int m = bin.length()-1;
+		tape = new char[(bin.length()+1)];
+		
+		for(int i = 0; i <= bin.length()-1; i++) {
+			tape[m]= bin.charAt(i);
+			m--;
 		}
+		
+		//System.out.print(tape);
+		
+		return tape;
 	}
 		
  	@Override
 	public String toString() {
-		return "" + Arrays.toString(tape) + "";
+		return "" + bin.reverse() + "";
 	}
 
 }
